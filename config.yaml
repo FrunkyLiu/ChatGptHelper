@@ -1,0 +1,90 @@
+LoginPage:
+  condition: 'visibility_of_element_located'
+  toGPTHome:
+    url: 'https://chat.openai.com/'
+
+  click_login_button:
+    by: 'CSS_SELECTOR'
+    element: 'button[data-testid="login-button"]'
+
+  enter_username:
+    by: 'CSS_SELECTOR'
+    element: 'input[name="username"]'
+
+  enter_password:
+    by: 'CSS_SELECTOR'
+    element: 'input[name="password"]'
+
+  click_account_button:
+    by: 'CSS_SELECTOR'
+    element: 'button[type="submit"][class*="_button-login-id"]'
+
+  click_password_button:
+    by: 'CSS_SELECTOR'
+    element: 'button[type="submit"][class*="_button-login-password"]'
+
+GPTMainPage:
+  condition: 'visibility_of_element_located'
+
+  enter_message:
+    by: 'TAG_NAME'
+    element: 'textarea'
+    script: "arguments[0].value = '{}';"
+
+  click_send_button:
+    by: 'CSS_SELECTOR'
+    element: 'button[data-testid="send-button"]'
+
+  get_GPT_ans:
+    current_url: 'https://chat.openai.com/'
+    cururlchange_condition: 'url_contains'
+
+    by_conversion: 'CSS_SELECTOR'
+    element_conversion: '.w-full.text-token-text-primary:last-child'
+
+    by_speaker: 'CLASS_NAME'
+    element_speaker: 'font-semibold'
+
+    by_wait_target: 'CLASS_NAME'
+    element_wait_target: 'text-gray-400'
+
+    by_response_area: 'CSS_SELECTOR'
+    element_response_area: '.markdown'
+
+    speaker: 'ChatGPT'
+    timeout: 240
+
+  logout:
+    by_side_menu: 'CSS_SELECTOR'
+    element_side_menu: 'button[class*="absolute"][class*=items-center]'
+
+    by_user: 'CSS_SELECTOR'
+    element_user: 'button[class*=group-ui-open][id*="headlessui-menu-button"]'
+
+    by_wait_user_menu: 'CSS_SELECTOR'
+    element_wait_user_menu: 'div[id*=headlessui-menu-items]'
+
+    by_logout: 'CSS_SELECTOR'
+    element_logout: 'a[as=button]'
+    keyword_logout: 'log out'
+  
+  delete_current_chat:
+    by_group: 'CSS_SELECTOR'
+    element_group: "div[class*=group][class*=relative]"
+
+    by_chat:  'CSS_SELECTOR'
+    element_chat: 'a[href="{}"]'
+
+    by_pop_menu:  'CSS_SELECTOR'
+    element_pop_menu: 'button[aria-haspopup="menu"]'
+
+    by_delete: 'CSS_SELECTOR'
+    element_delete: 'div[role="menuitem"]'
+    keyword_delete: 'delete'
+
+    by_dbcheck_dialog: 'CSS_SELECTOR'
+    element_dbcheck_dialog: 'div[role="dialog"]'
+
+    by_delete_dbcheck: 'CSS_SELECTOR'
+    element_delete_dbcheck: 'button[class*=btn-danger]'
+    keyword_delete_dbcheck: 'delete'
