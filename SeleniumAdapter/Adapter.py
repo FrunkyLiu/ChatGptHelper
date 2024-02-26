@@ -15,18 +15,33 @@ class Adapter_common_By(By):
 
 class SeleniumAdapter:
     def __init__(self, timeout:int=15) -> None:
+        """
+        Initialize SeleniumAdapter with a default timeout value.
+        """
         self.timeout=timeout
     
     def active_chrome(self):
+        """
+        Activate Chrome browser with undetected_chromedriver.
+        """
         self.driver = uc.Chrome()
 
     def get_current_url(self):
+        """
+        Get the current URL of the browser.
+        """
         return self.driver.current_url
 
     def visit_web(self, URL: str):
+        """
+        Visit the specified URL in the browser.
+        """
         self.driver.get(URL)
 
     def wait_for_page_load(self,):
+        """
+        Wait for the page to be fully loaded.
+        """
         WebDriverWait(self.driver, self.timeout).until(
             lambda driver: driver.execute_script("return document.readyState") == "complete"
         )
@@ -37,6 +52,9 @@ class SeleniumAdapter:
                          keyword: str,
                          web_element: WebDriverOrWebElement =None, 
                          timeout: int=None) -> WebElement:
+        """
+        Wait for the specified element to be located on the page.
+        """
         if timeout is None:
             timeout = self.timeout
         if web_element is None:
@@ -49,6 +67,9 @@ class SeleniumAdapter:
                      strategy: Adapter_common_By,
                      keyword: str,
                      web_element: WebDriverOrWebElement=None) -> WebElement:
+        """
+        Find and return the first element that matches the given strategy and keyword.
+        """
         if web_element is None:
             web_element = self.driver
         element = web_element.find_element(strategy, keyword)
@@ -58,22 +79,40 @@ class SeleniumAdapter:
                       strategy: Adapter_common_By,
                       keyword: str, 
                       web_element: WebDriverOrWebElement=None) -> tp.List[WebElement]:
+        """
+        Find and return a list of elements that match the given strategy and keyword.
+        """
         if web_element is None:
             web_element = self.driver
         elements = web_element.find_elements(strategy, keyword)
         return elements
 
     def clear_value(self, element: WebElement):
+        """
+        Clear the value of the specified element.
+        """
         element.clear()
 
     def send_keys(self, element: WebElement, text: str):
+        """
+        Send the specified text to the element.
+        """
         element.send_keys(text)
 
     def click_element(self, element: WebElement):
+        """
+        Click on the specified element.
+        """
         element.click()
 
     def execute_script(self, script: str, element: WebElement=None):
+        """
+        Execute the specified JavaScript code.
+        """
         return self.driver.execute_script(script, element)
     
     def get_text(self, element: WebElement) -> tp.List[str]:
+        """
+        Get the text content of the specified element.
+        """
         return element.text

@@ -7,9 +7,11 @@ import typing as tp
 class LoginPage(BaseAction):
 
     def toGPTHome(self):
+        """Navigate to the GPT Home page."""
         self.driver.visit_web(self.config_toGPTHome['url'])
         
     def click_login_button(self):
+        """Click on the login button."""
         login_button = self.driver.wait_for_element(
             self.condition,
             self.get_by(self.config_click_login_button['by']), 
@@ -18,6 +20,7 @@ class LoginPage(BaseAction):
         self.driver.click_element(login_button)
     
     def enter_username(self, username: str):
+        """Enter the username."""
         username_input = self.driver.wait_for_element(
             self.condition,
             self.get_by(self.config_enter_username['by']), 
@@ -26,6 +29,7 @@ class LoginPage(BaseAction):
         self.driver.send_keys(username_input, username)
 
     def enter_password(self, password: str):
+        """Enter the password."""
         password_input = self.driver.wait_for_element(
             self.condition,
             self.get_by(self.config_enter_password['by']), 
@@ -34,6 +38,7 @@ class LoginPage(BaseAction):
         self.driver.send_keys(password_input, password)
 
     def click_account_button(self):
+        """Click on the account button."""
         submit_button = self.driver.wait_for_element(
             self.condition,
             self.get_by(self.config_click_account_button['by']), 
@@ -42,6 +47,7 @@ class LoginPage(BaseAction):
         self.driver.click_element(submit_button)
         
     def click_password_button(self):
+        """Click on the password button."""
         submit_button = self.driver.wait_for_element(
             self.condition,
             self.get_by(self.config_click_password_button['by']), 
@@ -50,6 +56,13 @@ class LoginPage(BaseAction):
         self.driver.click_element(submit_button)
         
     def main(self, username:str, password:str):
+        """
+        Main login process.
+
+        Args:
+            username (str): The username to login with.
+            password (str): The password to login with.
+        """
         self.toGPTHome()
         self.click_login_button()
         self.enter_username(username)
@@ -61,6 +74,12 @@ class LoginPage(BaseAction):
 class GPTMainPage(BaseAction):
         
     def enter_message(self, message: str):
+        """
+        Enter a message in the chat area.
+
+        Args:
+            message (str): The message to be entered.
+        """
         testarea = self.driver.wait_for_element(
             self.condition,
             self.get_by(self.config_enter_message['by']), 
@@ -72,6 +91,7 @@ class GPTMainPage(BaseAction):
         self.driver.send_keys(testarea, ' ')
 
     def click_send_button(self):
+        """Click on the send button to send the message."""
         send_button = self.driver.wait_for_element(
             self.condition,
             self.get_by(self.config_click_send_button['by']), 
@@ -81,6 +101,15 @@ class GPTMainPage(BaseAction):
     
     
     def get_GPT_ans(self, timeout=None) -> str:
+        """
+        Get the GPT response.
+
+        Args:
+            timeout (int, optional): Timeout in seconds for waiting. Defaults to None.
+
+        Returns:
+            str: The GPT response text.
+        """
         if timeout is None:
             timeout = self.timeout
             
@@ -115,6 +144,7 @@ class GPTMainPage(BaseAction):
         return text
     
     def logout(self):
+        """Logout from the application."""
         if self.driver.find_elements(
             self.get_by(self.config_logout['by_side_menu']), 
             self.config_logout['element_side_menu']):
@@ -148,7 +178,7 @@ class GPTMainPage(BaseAction):
                 self.driver.click_element(element)
     
     def delete_current_chat(self):
-
+        """Delete the current chat."""
         if self.driver.find_elements(
             self.get_by(self.config_logout['by_side_menu']), 
             self.config_logout['element_side_menu']):
@@ -199,8 +229,16 @@ class GPTMainPage(BaseAction):
                 self.driver.click_element(element)
                 break
 
+    def main(self, message: str) -> str:
+        """
+        Main process for sending a message and retrieving GPT response.
 
-    def main(self, message: str):
+        Args:
+            message (str): The message to be sent.
+
+        Returns:
+            str: The GPT response text.
+        """
         self.enter_message(message)
         self.click_send_button()
         time.sleep(1)
